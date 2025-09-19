@@ -1,1 +1,0 @@
-# Voting-Machine-Using-Full-Stack

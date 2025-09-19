@@ -11,6 +11,9 @@ total_votes_needed = 0
 result_password = 'SDMIT'  # Password to access results
 captcha_value = ''  # CAPTCHA value for validation
 
+
+
+
 # Admin login
 @app.route('/', methods=['GET', 'POST'])
 def admin_authentication():

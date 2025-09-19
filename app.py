@@ -1,5 +1,6 @@
 from flask import Flask, request, redirect, url_for, session, render_template_string
 import random
+import json
 
 app = Flask(__name__)
 app.secret_key = 'some_secret_key'  # Needed for session management
@@ -8,7 +9,7 @@ app.secret_key = 'some_secret_key'  # Needed for session management
 candidates = []
 votes = {}
 total_votes_needed = 0
-result_password = 'SDMIT'  # Password to access results
+result_password = 'admin'  # Password to access results
 captcha_value = ''  # CAPTCHA value for validation
 
 
@@ -716,6 +717,8 @@ def results():
     percentages = [round((vote/total_votes_cast)*100, 1) if total_votes_cast > 0 else 0 for vote in data]
 
     # Display results and Chart.js for voting data
+    sorted_results = sorted(zip(labels, data, percentages), key=lambda x: x[1], reverse=True)
+    
     return render_template_string('''
     <!DOCTYPE html>
     <html lang="en">
@@ -989,17 +992,17 @@ def results():
         
         <script>
         // Sort results for ranking
-        const sortedResults = {{ sorted_results|tojsonfilter }};
+        const sortedResults = {{ sorted_results_json|safe }};
         
         // Bar Chart
         const barCtx = document.getElementById('barChart').getContext('2d');
         new Chart(barCtx, {
             type: 'bar',
             data: {
-                labels: {{ labels|tojsonfilter }},
+                labels: {{ labels_json|safe }},
                 datasets: [{
                     label: 'Votes',
-                    data: {{ data|tojsonfilter }},
+                    data: {{ data_json|safe }},
                     backgroundColor: [
                         'rgba(54, 162, 235, 0.8)',
                         'rgba(255, 99, 132, 0.8)',
@@ -1037,7 +1040,7 @@ def results():
                     tooltip: {
                         callbacks: {
                             label: function(context) {
-                                const percentage = {{ percentages|tojsonfilter }}[context.dataIndex];
+                                const percentage = {{ percentages_json|safe }}[context.dataIndex];
                                 return `${context.parsed.y} votes (${percentage}%)`;
                             }
                         }
@@ -1051,9 +1054,9 @@ def results():
         new Chart(pieCtx, {
             type: 'pie',
             data: {
-                labels: {{ labels|tojsonfilter }},
+                labels: {{ labels_json|safe }},
                 datasets: [{
-                    data: {{ data|tojsonfilter }},
+                    data: {{ data_json|safe }},
                     backgroundColor: [
                         'rgba(54, 162, 235, 0.8)',
                         'rgba(255, 99, 132, 0.8)',
@@ -1080,7 +1083,7 @@ def results():
                     tooltip: {
                         callbacks: {
                             label: function(context) {
-                                const percentage = {{ percentages|tojsonfilter }}[context.dataIndex];
+                                const percentage = {{ percentages_json|safe }}[context.dataIndex];
                                 return `${context.label}: ${context.parsed} votes (${percentage}%)`;
                             }
                         }
@@ -1093,7 +1096,9 @@ def results():
     </html>
     ''', votes=votes, labels=labels, data=data, total_votes_cast=total_votes_cast, 
          total_votes_needed=total_votes_needed, winner=winner, winner_votes=winner_votes,
-         percentages=percentages, sorted_results=sorted(zip(labels, data, percentages), key=lambda x: x[1], reverse=True))
+         percentages=percentages, sorted_results=sorted_results,
+         labels_json=json.dumps(labels), data_json=json.dumps(data), 
+         percentages_json=json.dumps(percentages), sorted_results_json=json.dumps(sorted_results))
 
 if __name__ == '__main__':
     app.run(debug=True)

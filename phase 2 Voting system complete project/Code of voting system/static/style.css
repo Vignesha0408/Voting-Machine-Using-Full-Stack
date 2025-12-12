@@ -1,0 +1,384 @@
+/* Neon-Dark Fusion Theme */
+
+:root {
+  /* Color Theme */
+  --bg: #0a0a0a; /* deep black */
+  --bg-secondary: #111111;
+  --bg-tertiary: #1a1a1a;
+  
+  --text: #e0e0e0; /* light gray */
+  --text-secondary: #b8b8b8; /* muted gray */
+  --muted: #888888; /* darker gray */
+  
+  --accent: #00ffcc; /* cyan */
+  --accent-secondary: #ff6b6b; /* coral */
+  --accent-hover: #00ccaa; /* darker cyan */
+  
+  --border: #333333; /* dark gray */
+  --shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  --shadow-hover: 0 8px 40px rgba(0, 255, 204, 0.1);
+  
+  /* Layout */
+  --radius: 16px;
+  --radius-small: 8px;
+  
+  /* Transitions */
+  --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Background Gradient Animation */
+body::before {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(45deg, 
+    rgba(0, 255, 204, 0.03) 0%, 
+    transparent 50%, 
+    rgba(255, 107, 107, 0.03) 100%);
+  z-index: -1;
+  animation: gradientShift 15s ease-in-out infinite;
+}
+
+@keyframes gradientShift {
+  0%, 100% { opacity: 0.8; }
+  50% { opacity: 0.4; }
+}
+
+/* Base Styles */
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+  background-color: var(--bg);
+  color: var(--text);
+  margin: 0;
+  padding: 0;
+  line-height: 1.7;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+/* Header */
+header {
+  background: linear-gradient(135deg, var(--accent), var(--accent-secondary));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  padding: 20px;
+  text-align: center;
+  border-radius: var(--radius);
+  margin-bottom: 20px;
+  box-shadow: var(--shadow);
+}
+
+header h1 {
+  margin: 0;
+  font-size: clamp(2rem, 5vw, 2.5rem);
+  font-weight: 800;
+}
+
+/* Text Inputs and Form Elements */
+input[type="text"], input[type="password"], input[type="email"], input[type="number"], 
+textarea, select {
+  width: 100%;
+  padding: 12px 15px;
+  margin: 8px 0 15px 0;
+  box-sizing: border-box;
+  border: 1px solid var(--border);
+  border-radius: var(--radius-small);
+  background-color: var(--bg-tertiary);
+  color: var(--text);
+  font-size: 1rem;
+  transition: var(--transition);
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+input[type="text"]:focus, input[type="password"]:focus, input[type="email"]:focus, 
+input[type="number"]:focus, textarea:focus, select:focus {
+  outline: none;
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px rgba(0, 255, 204, 0.3);
+}
+
+input[type="text"]:hover, input[type="password"]:hover, input[type="email"]:hover, 
+input[type="number"]:hover, textarea:hover, select:hover {
+  border-color: var(--accent);
+}
+
+/* Labels */
+label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+
+/* Tables */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  background-color: var(--bg-tertiary);
+  border-radius: var(--radius-small);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+}
+
+th, td {
+  padding: 15px;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+
+th {
+  background: linear-gradient(135deg, var(--bg-secondary), var(--bg-tertiary));
+  font-weight: 600;
+  color: var(--accent);
+  text-transform: uppercase;
+  font-size: 0.85rem;
+  letter-spacing: 0.5px;
+}
+
+tr:last-child td {
+  border-bottom: none;
+}
+
+tr:hover {
+  background-color: rgba(0, 255, 204, 0.05);
+  transition: var(--transition);
+}
+
+/* Election Status */
+.election-status {
+  background-color: var(--bg-secondary);
+  padding: 30px;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  margin-bottom: 20px;
+  border: 1px solid var(--border);
+}
+
+.election-status h2 {
+  margin-top: 0;
+  background: linear-gradient(135deg, var(--accent), var(--accent-secondary));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-size: 1.8rem;
+  font-weight: 700;
+}
+
+.status {
+  font-weight: bold;
+  color: var(--accent);
+  font-size: 1.2rem;
+}
+
+.status-open {
+  color: var(--accent);
+}
+
+/* Winner Announcement */
+.winner-announcement {
+  background: linear-gradient(135deg, var(--bg-secondary), var(--bg-tertiary));
+  color: var(--text);
+  padding: 30px;
+  border-radius: var(--radius);
+  text-align: center;
+  margin-bottom: 20px;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--accent);
+  transition: var(--transition);
+}
+
+.winner-announcement:hover {
+  transform: translateY(-3px);
+  box-shadow: var(--shadow-hover);
+}
+
+.winner-announcement h3 {
+  margin-top: 0;
+  font-size: 1.8rem;
+  background: linear-gradient(135deg, var(--accent), var(--accent-secondary));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-weight: 700;
+}
+
+/* Results Chart */
+.results-chart {
+  background-color: var(--bg-secondary);
+  padding: 30px;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  margin-bottom: 20px;
+  border: 1px solid var(--border);
+  height: 400px;
+}
+
+/* Results Display */
+.results-display {
+  background-color: var(--bg-secondary);
+  padding: 30px;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  margin-bottom: 20px;
+  border: 1px solid var(--border);
+}
+
+.results-display h3 {
+  margin-top: 0;
+  background: linear-gradient(135deg, var(--accent), var(--accent-secondary));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-size: 1.8rem;
+  font-weight: 700;
+}
+
+.no-results {
+  background: linear-gradient(135deg, var(--bg-secondary), var(--bg-tertiary));
+  border: 1px solid var(--border);
+  padding: 30px;
+  margin: 20px 0;
+  text-align: center;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+}
+
+.no-results p {
+  margin: 10px 0;
+  color: var(--text-secondary);
+}
+
+/* User Portals and Additional Options */
+.user-portals, .additional-options {
+  background-color: var(--bg-secondary);
+  padding: 30px;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  margin-bottom: 20px;
+  border: 1px solid var(--border);
+}
+
+.user-portals h2, .additional-options h2 {
+  margin-top: 0;
+  background: linear-gradient(135deg, var(--accent), var(--accent-secondary));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-size: 1.8rem;
+  font-weight: 700;
+}
+
+.button-group {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+  margin-top: 20px;
+}
+
+.portal-button, .option-button {
+  padding: 15px 30px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: var(--radius-small);
+  cursor: pointer;
+  transition: var(--transition);
+  background: linear-gradient(135deg, var(--accent), var(--accent-secondary));
+  color: var(--bg);
+  box-shadow: var(--shadow);
+  flex: 1;
+  min-width: 200px;
+}
+
+.portal-button:hover, .option-button:hover {
+  background: linear-gradient(135deg, var(--accent-hover), var(--accent-secondary));
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-hover);
+}
+
+.portal-button:active, .option-button:active {
+  transform: translateY(0);
+}
+
+/* Fade In Animation */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in {
+  animation: fadeInUp 0.8s ease-out;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .container {
+    padding: 15px;
+  }
+  
+  header h1 {
+    font-size: 2rem;
+  }
+  
+  .button-group {
+    flex-direction: column;
+  }
+  
+  .portal-button, .option-button {
+    width: 100%;
+    min-width: auto;
+  }
+  
+  .results-chart {
+    height: 300px;
+  }
+  
+  .election-status, .winner-announcement, .results-display, 
+  .user-portals, .additional-options {
+    padding: 20px;
+  }
+  
+  th, td {
+    padding: 10px;
+    font-size: 0.9rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .container {
+    padding: 10px;
+  }
+  
+  header h1 {
+    font-size: 1.8rem;
+  }
+  
+  .button-group {
+    gap: 15px;
+  }
+  
+  .portal-button, .option-button {
+    padding: 12px 20px;
+    font-size: 1rem;
+  }
+  
+  input[type="text"], input[type="password"], input[type="email"], input[type="number"], 
+  textarea, select {
+    padding: 10px 12px;
+    font-size: 0.9rem;
+  }
+}
